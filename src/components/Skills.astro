@@ -253,9 +253,12 @@ const total = groups.reduce((n, g) => n + g.skills.length, 0);
 		gap: 0.625rem;
 		transition: border-color 0.15s ease;
 	}
+
 	.group-box:hover {
-		border-color: var(--border-default);
-		background: #1c2128;
+		/* border-color: var(--border-default);
+		background: #1c2128; */
+		border-color: var(--border-subtle);
+		background: var(--canvas-overlay);
 	}
 
 	/* Group header */
@@ -305,21 +308,27 @@ const total = groups.reduce((n, g) => n + g.skills.length, 0);
 		gap: 0.3rem;
 		height: 22px;
 		padding: 0 0.5rem;
-		background: #21262d;
-		border: 1px solid #30363d;
+		/* background: #21262d; */
+		background: var(--canvas-inset);
+		/* border: 1px solid #30363d; */
+		border: 1px solid var(--border-default);
 		border-radius: 4px;
 		font-size: 0.6875rem;
 		font-weight: 500;
 		font-family: var(--font-mono);
-		color: #adbac7;
+		/* color: #adbac7; */
+		color: var(--fg-default);
 		white-space: nowrap;
 		transition:
 			border-color 0.15s,
 			color 0.15s;
 	}
+
 	.chip:hover {
-		border-color: #6e7681;
-		color: #e6edf3;
+		/* border-color: #6e7681;
+		color: #e6edf3; */
+		border-color: var(--border-subtle);
+		color: var(--fg-default);
 	}
 
 	/* Icon inside chip */
