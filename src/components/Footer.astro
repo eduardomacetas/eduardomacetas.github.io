@@ -1,0 +1,56 @@
+---
+import Icon from './Icon.astro';
+const year = new Date().getFullYear();
+---
+
+<footer>
+	<div class="wrapper footer-inner">
+		<p class="copy">&copy; {year} Eduardo Macetas</p>
+		<div class="socials">
+			<a href="https://github.com/eduardomacetas" class="social" aria-label="GitHub" target="_blank" rel="noopener">
+				<Icon icon="github-logo" size="1.1em" />
+			</a>
+			<a href="https://www.linkedin.com/in/jorge-macetas" class="social" aria-label="LinkedIn" target="_blank" rel="noopener">
+				<Icon icon="linkedin-logo" size="1.1em" />
+			</a>
+			<a href="mailto:eduardo.macetas@gmail.com" class="social" aria-label="Email">
+				<Icon icon="paper-plane-tilt" size="1.1em" />
+			</a>
+		</div>
+	</div>
+</footer>
+
+<style>
+	footer {
+		margin-top: auto;
+		border-top: 1px solid var(--gray-800);
+		padding-block: 1.5rem;
+	}
+
+	.footer-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.copy {
+		color: var(--gray-500);
+		font-size: var(--text-sm);
+	}
+
+	.socials { display: flex; gap: 0.25rem; }
+
+	.social {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2rem;
+		height: 2rem;
+		color: var(--gray-500);
+		text-decoration: none;
+		border-radius: var(--radius-sm);
+		transition: color var(--theme-transition);
+	}
+	.social:hover { color: var(--gray-0); }
+</style>

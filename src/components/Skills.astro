@@ -1,0 +1,340 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Skill {
+	name: string;
+	icon?: string;
+	dot?: string;
+}
+interface Group {
+	label: string;
+	dot: string;
+	badge?: string;
+	skills: Skill[];
+}
+
+// Row 1 — Core
+// Row 2 — Infrastructure
+// Row 3 — Workflow
+const groups: Group[] = [
+	// ── Row 1: Core ──────────────────────────────────
+	{
+		label: 'Languages',
+		dot: '#8b949e',
+		skills: [
+			{ name: 'Python',     icon: 'logos:python' },
+			{ name: 'Java',       icon: 'logos:java' },
+			{ name: 'JavaScript', icon: 'logos:javascript' },
+			{ name: 'TypeScript', icon: 'logos:typescript-icon' },
+			{ name: 'C#',         icon: 'logos:c-sharp' },
+			{ name: 'C++',        icon: 'logos:c-plusplus' },
+		],
+	},
+	{
+		label: 'Web Automation',
+		dot: '#58a6ff',
+		skills: [
+			{ name: 'Selenium',    icon: 'logos:selenium' },
+			{ name: 'Cypress',     icon: 'logos:cypress-icon' },
+			{ name: 'Playwright',  icon: 'logos:playwright' },
+			{ name: 'WebdriverIO', icon: 'logos:webdriverio' },
+		],
+	},
+	{
+		label: 'API Testing',
+		dot: '#f97316',
+		skills: [
+			{ name: 'Postman', icon: 'logos:postman-icon' },
+			{ name: 'Newman',  dot: '#ef4444' },
+			{ name: 'REST',    icon: 'logos:rest' },
+			{ name: 'GraphQL', icon: 'logos:graphql' },
+		],
+	},
+	{
+		label: 'Mobile Testing',
+		dot: '#a371f7',
+		skills: [
+			{ name: 'Appium',         icon: 'logos:appium' },
+			{ name: 'BrowserStack',   icon: 'logos:browserstack' },
+			{ name: 'Android Studio', icon: 'logos:android-icon' },
+			{ name: 'Xcode',          icon: 'logos:apple' },
+		],
+	},
+
+	// ── Row 2: Process & Quality ─────────────────────────
+	{
+		label: 'QA Practices',
+		dot: '#58a6ff',
+		skills: [
+			{ name: 'Manual Testing', dot: '#8b949e' },
+			{ name: 'Regression',     dot: '#a371f7' },
+			{ name: 'Smoke Testing',  dot: '#3fb950' },
+			{ name: 'E2E Testing',    dot: '#d29922' },
+			{ name: 'Exploratory',    dot: '#f97316' },
+			{ name: 'UAT',            dot: '#58a6ff' },
+		],
+	},
+	{
+		label: 'Test Management',
+		dot: '#3fb950',
+		skills: [
+			{ name: 'TestRail', dot: '#65C179' },
+			{ name: 'Jira',     icon: 'logos:jira' },
+			{ name: 'Asana',    icon: 'logos:asana' },
+			{ name: 'Trello',   icon: 'logos:trello' },
+		],
+	},
+	{
+		label: 'Methodologies',
+		dot: '#d29922',
+		skills: [
+			{ name: 'Agile', dot: '#58a6ff' },
+			{ name: 'Scrum', dot: '#3fb950' },
+			{ name: 'BDD',   dot: '#d29922' },
+			{ name: 'TDD',   dot: '#a371f7' },
+		],
+	},
+	{
+		label: 'Reporting',
+		dot: '#a371f7',
+		skills: [
+			{ name: 'Allure',        dot: '#00B4FF' },
+			{ name: 'ExtentReports', dot: '#3fb950' },
+			{ name: 'HTML Reports',  dot: '#e6edf3' },
+		],
+	},
+
+	// ── Row 3: Infrastructure ───────────────────────────────
+	{
+		label: 'Performance',
+		dot: '#f85149',
+		skills: [
+			{ name: 'JMeter',  dot: '#d22128' },
+			{ name: 'k6',      dot: '#7D64FF' },
+			{ name: 'Gatling', dot: '#FF7200' },
+		],
+	},
+	{
+		label: 'CI/CD',
+		dot: '#d29922',
+		skills: [
+			{ name: 'GitHub Actions', dot: '#2088FF' },
+			{ name: 'Jenkins',        icon: 'logos:jenkins' },
+			{ name: 'Azure DevOps',   icon: 'logos:azure-icon' },
+			{ name: 'GitLab CI',      icon: 'logos:gitlab' },
+		],
+	},
+	{
+		label: 'Version Control',
+		dot: '#58a6ff',
+		skills: [
+			{ name: 'Git',       icon: 'logos:git-icon' },
+			{ name: 'GitHub',    icon: 'logos:github-octocat' },
+			{ name: 'GitLab',    icon: 'logos:gitlab' },
+			{ name: 'Bitbucket', icon: 'logos:bitbucket' },
+		],
+	},
+	{
+		label: 'Browsers & Tools',
+		dot: '#f97316',
+		skills: [
+			{ name: 'Chrome DevTools', dot: '#4285F4' },
+			{ name: 'Firefox',         icon: 'logos:firefox' },
+			{ name: 'Charles Proxy',   dot: '#6e7681' },
+			{ name: 'Fiddler',         dot: '#00B4FF' },
+		],
+	},
+];
+
+const total = groups.reduce((n, g) => n + g.skills.length, 0);
+---
+
+<section class="skills-wrap">
+	<div class="skills-title-row">
+		<span class="skills-title">Skills &amp; Technologies</span>
+		<span class="skills-count">{total}</span>
+	</div>
+
+	<div class="groups-grid">
+		{
+			groups.map((group) => (
+				<div class="group-box">
+					<div class="group-top">
+						<span class="gdot" style={`background:${group.dot}`} />
+						<span class="glabel">{group.label}</span>
+						{group.badge && (
+							<span class="gbadge">{group.badge}</span>
+						)}
+					</div>
+
+					<div class="chips">
+						{group.skills.map((skill) => (
+							<span class="chip">
+								{skill.icon ? (
+									<Icon name={skill.icon} class="cicon" />
+								) : (
+									<span
+										class="cdot"
+										style={`background:${skill.dot ?? "#8b949e"}`}
+									/>
+								)}
+								{skill.name}
+							</span>
+						))}
+					</div>
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	/* ── Section wrapper ── */
+	.skills-wrap {
+		padding: 2rem 0;
+	}
+
+	/* Title row */
+	.skills-title-row {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		margin-bottom: 1.25rem;
+		padding-bottom: 0.75rem;
+		border-bottom: 1px solid var(--border-default);
+	}
+
+	.skills-title {
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: var(--fg-default);
+		font-family: var(--font-sans);
+	}
+
+	.skills-count {
+		font-size: 0.75rem;
+		color: var(--fg-subtle);
+		background: var(--canvas-subtle);
+		border: 1px solid var(--border-default);
+		border-radius: 20px;
+		padding: 0.1rem 0.5rem;
+		font-family: var(--font-mono);
+	}
+
+	/* ── Grid of group boxes ── */
+	.groups-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.5rem;
+	}
+
+	@media (min-width: 480px) {
+		.groups-grid {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 0.5rem;
+		}
+	}
+
+	@media (min-width: 860px) {
+		.groups-grid {
+			grid-template-columns: repeat(4, 1fr);
+			gap: 0.5rem;
+		}
+	}
+
+	/* ── Individual group box ── */
+	.group-box {
+		background: var(--canvas-subtle);
+		border: 1px solid var(--border-default);
+		border-radius: 6px;
+		padding: 0.875rem 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.625rem;
+		transition: border-color 0.15s ease;
+	}
+	.group-box:hover {
+		border-color: var(--border-default);
+		background: #1c2128;
+	}
+
+	/* Group header */
+	.group-top {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+
+	.gdot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		flex-shrink: 0;
+	}
+
+	.glabel {
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: var(--fg-default);
+		font-family: var(--font-sans);
+		flex: 1;
+	}
+
+	.gbadge {
+		font-size: 0.6875rem;
+		font-weight: 600;
+		color: #3fb950;
+		background: rgba(63, 185, 80, 0.1);
+		border: 1px solid rgba(63, 185, 80, 0.4);
+		border-radius: 20px;
+		padding: 0.1rem 0.4rem;
+		white-space: nowrap;
+	}
+
+	/* ── Chips container ── */
+	.chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.3rem;
+	}
+
+	/* ── Individual chip ── */
+	.chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		height: 22px;
+		padding: 0 0.5rem;
+		background: #21262d;
+		border: 1px solid #30363d;
+		border-radius: 4px;
+		font-size: 0.6875rem;
+		font-weight: 500;
+		font-family: var(--font-mono);
+		color: #adbac7;
+		white-space: nowrap;
+		transition:
+			border-color 0.15s,
+			color 0.15s;
+	}
+	.chip:hover {
+		border-color: #6e7681;
+		color: #e6edf3;
+	}
+
+	/* Icon inside chip */
+	.cicon {
+		width: 12px;
+		height: 12px;
+		flex-shrink: 0;
+		display: block;
+	}
+
+	/* Dot fallback inside chip */
+	.cdot {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		flex-shrink: 0;
+	}
+</style>

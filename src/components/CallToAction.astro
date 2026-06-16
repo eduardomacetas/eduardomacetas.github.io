@@ -1,0 +1,33 @@
+---
+interface Props {
+	href: string;
+}
+const { href } = Astro.props;
+---
+
+<a href={href} class="cta">
+	<slot />
+</a>
+
+<style>
+	.cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 1rem;
+		background: transparent;
+		color: var(--gray-300);
+		border: 1px solid var(--gray-700);
+		border-radius: var(--radius-sm);
+		font-size: var(--text-sm);
+		font-weight: 500;
+		text-decoration: none;
+		transition: all var(--theme-transition);
+		white-space: nowrap;
+	}
+	.cta:hover {
+		border-color: var(--gray-500);
+		color: var(--gray-0);
+		background: var(--gray-800);
+	}
+</style>

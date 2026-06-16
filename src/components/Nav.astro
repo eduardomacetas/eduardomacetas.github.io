@@ -1,0 +1,383 @@
+---
+import Icon from "./Icon.astro";
+import type { iconPaths } from "./IconPaths";
+
+const links = [
+	{ label: "Work", href: "/work/" },
+	{ label: "About", href: "/about/" },
+];
+
+const socials: { label: string; href: string; icon: keyof typeof iconPaths }[] =
+	[
+		{
+			label: "GitHub",
+			href: "https://github.com/eduardomacetas",
+			icon: "github-logo",
+		},
+		{
+			label: "LinkedIn",
+			href: "https://www.linkedin.com/in/jorge-macetas",
+			icon: "linkedin-logo",
+		},
+	];
+
+const isActive = (href: string) => {
+	let p = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+	if (!p.startsWith("/")) p = "/" + p;
+	if (!p.endsWith("/")) p += "/";
+	return p === href || (href !== "/" && p.startsWith(href));
+};
+---
+
+<header class="gh-header">
+	<div class="gh-header-inner wrapper">
+		<!-- Logo -->
+		<a href="/" class="gh-logo" aria-label="Home">
+			<span class="gh-logo-mark">EM</span>
+			<span class="gh-logo-name">eduardo-macetas</span>
+		</a>
+
+		<!-- Desktop nav -->
+		<nav class="gh-nav" aria-label="Main">
+			{
+				links.map(({ label, href }) => (
+					<a
+						href={href}
+						class:list={["gh-nav-link", { active: isActive(href) }]}
+						aria-current={isActive(href) ? "page" : null}
+					>
+						{label}
+					</a>
+				))
+			}
+		</nav>
+
+		<div class="gh-actions">
+			{
+				socials.map(({ href, icon, label }) => (
+					<a
+						href={href}
+						class="gh-icon-btn"
+						aria-label={label}
+						target="_blank"
+						rel="noopener"
+					>
+						<Icon icon={icon} />
+					</a>
+				))
+			}
+			<a
+				href="mailto:eduardo.macetas@gmail.com"
+				class="btn btn-primary gh-contact-btn"
+			>
+				Contact
+			</a>
+			<button
+				id="theme-toggle"
+				class="gh-icon-btn gh-theme-btn"
+				aria-label="Toggle theme"
+			>
+				<span id="icon-sun" style="display:none">☀️</span>
+				<span id="icon-moon">🌙</span>
+			</button>
+		</div>
+
+		<!-- Mobile toggle -->
+		<menu-button>
+			<template>
+				<button
+					class="gh-menu-btn"
+					aria-expanded="false"
+					aria-label="Menu"
+				>
+					<Icon icon="list" />
+				</button>
+			</template>
+		</menu-button>
+	</div>
+
+	<!-- Mobile drawer -->
+	<div id="menu-content" class="gh-drawer" hidden>
+		{
+			links.map(({ label, href }) => (
+				<a
+					href={href}
+					class:list={["gh-drawer-link", { active: isActive(href) }]}
+				>
+					{label}
+				</a>
+			))
+		}
+		<div class="gh-drawer-socials">
+			{
+				socials.map(({ href, icon, label }) => (
+					<a
+						href={href}
+						class="gh-icon-btn"
+						aria-label={label}
+						target="_blank"
+						rel="noopener"
+					>
+						<Icon icon={icon} />
+					</a>
+				))
+			}
+		</div>
+	</div>
+</header>
+
+<script>
+	class MenuButton extends HTMLElement {
+		constructor() {
+			super();
+			this.appendChild(
+				this.querySelector("template")!.content.cloneNode(true),
+			);
+			const btn = this.querySelector("button")!;
+			const menu = document.getElementById("menu-content")!;
+			menu.hidden = true;
+
+			const open = (v: boolean) => {
+				btn.setAttribute("aria-expanded", String(v));
+				menu.hidden = !v;
+			};
+			btn.addEventListener("click", () => open(menu.hidden));
+
+			const mq = window.matchMedia("(min-width: 768px)");
+			const sync = (e: MediaQueryList | MediaQueryListEvent) => {
+				if (e.matches) open(false);
+				btn.hidden = e.matches;
+			};
+			mq.addEventListener("change", sync);
+			sync(mq);
+		}
+	}
+	customElements.define("menu-button", MenuButton);
+
+	// Theme toggle
+	const themeToggle = document.getElementById("theme-toggle");
+	const iconSun = document.getElementById("icon-sun");
+	const iconMoon = document.getElementById("icon-moon");
+	const html = document.documentElement;
+
+	const applyTheme = (theme: string) => {
+		if (theme === "light") {
+			html.classList.remove("theme-dark");
+			html.classList.add("light");
+			iconSun!.style.display = "none";
+			iconMoon!.style.display = "inline";
+		} else {
+			html.classList.remove("light");
+			html.classList.add("theme-dark");
+			iconSun!.style.display = "inline";
+			iconMoon!.style.display = "none";
+		}
+	};
+
+	// Load saved preference
+	const saved = localStorage.getItem("theme") ?? "dark";
+	applyTheme(saved);
+
+	themeToggle!.addEventListener("click", () => {
+		const isDark = html.classList.contains("theme-dark");
+		const next = isDark ? "light" : "dark";
+		localStorage.setItem("theme", next);
+		applyTheme(next);
+	});
+</script>
+
+<style>
+	.gh-header {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background: rgba(13, 17, 23, 0.95);
+		border-bottom: 1px solid var(--border-default);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+	}
+
+	.gh-header-inner {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		height: 3.25rem;
+	}
+
+	/* Logo */
+	.gh-logo {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		text-decoration: none;
+		flex-shrink: 0;
+		color: var(--fg-default);
+		transition: opacity var(--theme-transition);
+	}
+	.gh-logo:hover {
+		opacity: 0.8;
+		text-decoration: none;
+	}
+
+	.gh-logo-mark {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.75rem;
+		height: 1.75rem;
+		/* background: var(--success-emphasis); */
+		background: var(--cyan);
+		color: #fff;
+		border-radius: 4px;
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.02em;
+	}
+
+	.gh-logo-name {
+		font-size: var(--text-sm);
+		font-weight: 600;
+		color: var(--fg-default);
+	}
+
+	/* Desktop nav */
+	.gh-nav {
+		display: none;
+		align-items: center;
+		gap: 0.125rem;
+		flex: 1;
+	}
+
+	.gh-nav-link {
+		padding: 0.3125rem 0.625rem;
+		font-size: var(--text-sm);
+		font-weight: 500;
+		color: var(--fg-muted);
+		border-radius: var(--r-sm);
+		text-decoration: none;
+		transition: all var(--theme-transition);
+	}
+	.gh-nav-link:hover {
+		color: var(--fg-default);
+		background: var(--canvas-subtle);
+		text-decoration: none;
+	}
+	.gh-nav-link.active {
+		color: var(--fg-default);
+		font-weight: 600;
+	}
+
+	/* Actions */
+	.gh-actions {
+		display: none;
+		align-items: center;
+		gap: 0.5rem;
+		margin-left: auto;
+	}
+
+	.gh-icon-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2rem;
+		height: 2rem;
+		color: var(--fg-muted);
+		border-radius: var(--r-sm);
+		text-decoration: none;
+		transition: color var(--theme-transition);
+		font-size: 1.1rem;
+	}
+	.gh-icon-btn:hover {
+		color: var(--fg-default);
+		text-decoration: none;
+	}
+
+	.gh-contact-btn {
+		font-size: var(--text-xs) !important;
+	}
+
+	/* Mobile */
+	.gh-menu-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2rem;
+		height: 2rem;
+		margin-left: auto;
+		background: transparent;
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-sm);
+		color: var(--fg-muted);
+		cursor: pointer;
+		font-size: 1.1rem;
+		transition: all var(--theme-transition);
+	}
+	.gh-menu-btn:hover {
+		color: var(--fg-default);
+		border-color: var(--fg-subtle);
+	}
+	.gh-menu-btn[hidden] {
+		display: none;
+	}
+
+	.gh-drawer {
+		border-top: 1px solid var(--border-muted);
+		padding: 0.75rem 1rem;
+		flex-direction: column;
+		gap: 0.125rem;
+		background: var(--canvas-default);
+	}
+
+	.gh-drawer:not([hidden]) {
+		display: flex;
+	}
+
+	.gh-drawer-link {
+		display: block;
+		padding: 0.5rem 0.625rem;
+		font-size: var(--text-sm);
+		font-weight: 500;
+		color: var(--fg-muted);
+		border-radius: var(--r-sm);
+		text-decoration: none;
+		transition: all var(--theme-transition);
+	}
+	.gh-drawer-link:hover {
+		color: var(--fg-default);
+		background: var(--canvas-subtle);
+	}
+	.gh-drawer-link.active {
+		color: var(--fg-default);
+		font-weight: 600;
+	}
+
+	.gh-drawer-socials {
+		display: flex;
+		gap: 0.25rem;
+		padding: 0.5rem 0.25rem 0;
+		border-top: 1px solid var(--border-muted);
+		margin-top: 0.5rem;
+	}
+
+	/* Desktop overrides */
+	@media (min-width: 768px) {
+		.gh-nav {
+			display: flex;
+		}
+		.gh-actions {
+			display: flex;
+		}
+	}
+
+	.gh-theme-btn {
+		border: 1px solid var(--border-default);
+		font-size: 0.875rem;
+		cursor: pointer;
+		background: transparent;
+	}
+
+	.gh-theme-btn:hover {
+		background: var(--canvas-subtle);
+		border-color: var(--fg-subtle);
+	}
+</style>
