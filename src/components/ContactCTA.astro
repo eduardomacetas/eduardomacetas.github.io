@@ -1,19 +1,27 @@
 ---
-import Icon from './Icon.astro';
+import Icon from "./Icon.astro";
 ---
 
 <aside class="contact-cta">
 	<div class="cta-content">
 		<div class="cta-text">
 			<h2>Let's work together</h2>
-			<p>7+ years finding bugs before users do. Open to new QA opportunities — let's talk.</p>
+			<p>
+				7+ years finding bugs before users do. Open to new QA
+				opportunities — let's talk.
+			</p>
 		</div>
 		<div class="cta-actions">
 			<a href="mailto:eduardo.macetas@gmail.com" class="btn-primary">
 				<Icon icon="paper-plane-tilt" size="1em" />
 				Send a message
 			</a>
-			<a href="https://www.linkedin.com/in/jorge-macetas" class="btn-secondary" target="_blank" rel="noopener">
+			<a
+				href="https://www.linkedin.com/in/jorge-macetas"
+				class="btn-secondary"
+				target="_blank"
+				rel="noopener"
+			>
 				<Icon icon="linkedin-logo" size="1em" />
 				Connect on LinkedIn
 			</a>
@@ -27,8 +35,8 @@ import Icon from './Icon.astro';
 	}
 
 	.cta-content {
-		background: var(--gray-900);
-		border: 1px solid var(--gray-700);
+		background: var(--canvas-subtle);
+		border: 1px solid var(--border-default);
 		border-radius: var(--radius-lg);
 		padding: 2.5rem;
 		display: flex;
@@ -39,13 +47,13 @@ import Icon from './Icon.astro';
 	.cta-text h2 {
 		font-size: var(--text-2xl);
 		font-weight: 700;
-		color: var(--gray-0);
+		color: var(--fg-default);
 		margin-bottom: 0.5rem;
 		letter-spacing: -0.02em;
 	}
 
 	.cta-text p {
-		color: var(--gray-400);
+		color: var(--fg-muted);
 		font-size: var(--text-md);
 		line-height: 1.6;
 		max-width: 48ch;
@@ -57,7 +65,7 @@ import Icon from './Icon.astro';
 		flex-wrap: wrap;
 	}
 
-	.btn-primary, .btn-secondary {
+	.btn-secondary {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
@@ -70,18 +78,31 @@ import Icon from './Icon.astro';
 	}
 
 	.btn-primary {
-		background: var(--gray-0);
-		color: var(--gray-999);
-		border: 1px solid var(--gray-0);
+		/* background: var(--accent-default); */
+		background: var(--cyan);
+		/* color: var(--fg-on-accent); */
+		color: var(--cyan-fg);
+		/* border: 1px solid var(--accent-default); */
+		border: 1px solid var(--cyan);
 	}
-	.btn-primary:hover { background: var(--gray-100); }
+
+	.btn-primary:hover {
+		/* background: var(--fg-muted); */
+		background: var(--cyan-hover);
+		border-color: var(--cyan-hover);
+	}
 
 	.btn-secondary {
 		background: transparent;
-		color: var(--gray-200);
-		border: 1px solid var(--gray-700);
+		color: var(--fg-muted);
+		border: 1px solid var(--border-default);
 	}
-	.btn-secondary:hover { border-color: var(--gray-500); color: var(--gray-0); background: var(--gray-800); }
+
+	.btn-secondary:hover {
+		border-color: var(--fg-su);
+		color: var(--fg-default);
+		background: var(--canvas-subtle);
+	}
 
 	@media (min-width: 50em) {
 		.cta-content {
@@ -91,6 +112,8 @@ import Icon from './Icon.astro';
 			padding: 2.5rem 3rem;
 		}
 
-		.cta-actions { flex-shrink: 0; }
+		.cta-actions {
+			flex-shrink: 0;
+		}
 	}
 </style>
