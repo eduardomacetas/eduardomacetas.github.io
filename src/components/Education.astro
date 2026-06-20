@@ -16,10 +16,14 @@ const tags: string[] = [];
 			<img src="/assets/unsa.png" alt="UNSA" class="edu-logo" />
 			<div class="edu-info">
 				<div class="edu-meta-row">
-					<span class="edu-degree-badge">Bachiller &middot; Computer Science</span>
+					<span class="edu-degree-badge"
+						>Bachiller &middot; Computer Science</span
+					>
 					<span class="edu-year">2018</span>
 				</div>
-				<div class="edu-name">Universidad Nacional de San Agustín de Arequipa</div>
+				<div class="edu-name">
+					Universidad Nacional de San Agustín de Arequipa
+				</div>
 				<div class="edu-location">Arequipa, Perú</div>
 			</div>
 		</div>
@@ -34,33 +38,60 @@ const tags: string[] = [];
 				</span>
 			))}
 		</div> -->
-
 	</div>
 </section>
 
 <style>
 	.edu-section {
-		padding: 2rem 0;
+		--edu-border: #30363d;
+		--edu-card-bg: #161b22;
+		--edu-card-hover: #6e7681;
+		--edu-text-primary: #e6edf3;
+		--edu-text-secondary: #8b949e;
+		--edu-text-muted: #6e7681;
+		--edu-chip-bg: #21262d;
+		--edu-chip-text: #adbac7;
+		--edu-tag-color: #58a6ff;
+		--edu-tag-bg: rgba(31, 111, 235, 0.15);
+		--edu-tag-border: rgba(56, 139, 253, 0.4);
+	}
+
+	:root.light .edu-section {
+		--edu-border: #d0d7de;
+		--edu-card-bg: #ffffff;
+		--edu-card-hover: #afb8c1;
+		--edu-text-primary: #1f2328;
+		--edu-text-secondary: #656d76;
+		--edu-text-muted: #848d97;
+		--edu-chip-bg: #f6f8fa;
+		--edu-chip-text: #1f2328;
+		--edu-tag-color: #0969da;
+		--edu-tag-bg: rgba(9, 105, 218, 0.1);
+		--edu-tag-border: rgba(9, 105, 218, 0.3);
 	}
 
 	.edu-label {
 		font-size: 0.875rem;
 		font-weight: 600;
-		color: #e6edf3;
+		/* color: #e6edf3; */
+		color: var(--fg-default);
 		margin-bottom: 1.25rem;
 		padding-bottom: 0.75rem;
 		border-bottom: 1px solid #30363d;
 		font-family: var(--font-sans);
+		border-bottom-color: var(--edu-border);
 	}
 
 	.edu-card {
-		background: #161b22;
+		background: var(--canvas-subtle);
 		border: 1px solid #30363d;
 		border-radius: 8px;
+		border-color: var(--border-default);
 		padding: 1.5rem;
 	}
 	.edu-card:hover {
-		border-color: #6e7681;
+		/* border-color: #6e7681; */
+		border-color: var(--edu-card-hover);
 	}
 
 	/* Top */
@@ -77,6 +108,7 @@ const tags: string[] = [];
 		object-fit: contain;
 		border-radius: 8px;
 		border: 1px solid #30363d;
+		border-color: var(--edu-border);
 		flex-shrink: 0;
 	}
 
@@ -98,14 +130,16 @@ const tags: string[] = [];
 	.edu-degree-badge {
 		font-size: 1rem;
 		font-weight: 700;
-		color: #e6edf3;
+		/* color: #e6edf3; */
+		color: var(--fg-default);
 		font-family: var(--font-sans);
 		letter-spacing: -0.01em;
 	}
 
 	.edu-year {
 		font-size: 0.75rem;
-		color: #6e7681;
+		/* color: #6e7681; */
+		color: var(--fg-subtle);
 		font-family: var(--font-mono);
 		white-space: nowrap;
 	}
@@ -113,19 +147,22 @@ const tags: string[] = [];
 	.edu-name {
 		font-size: 0.8125rem;
 		font-weight: 400;
-		color: #8b949e;
+		/* color: #8b949e; */
+		color : var(--fg-muted);
 		line-height: 1.4;
 	}
 
 	.edu-location {
 		font-size: 0.75rem;
-		color: #6e7681;
+		/* color: #6e7681; */
+		color: var(--fg-subtle);
 	}
 
 	/* Divider */
 	.edu-divider {
 		height: 1px;
-		background: #21262d;
+		/* background: #21262d; */
+		background: var(--edu-divider);
 		margin-bottom: 1rem;
 	}
 
@@ -141,14 +178,17 @@ const tags: string[] = [];
 		display: inline-flex;
 		align-items: center;
 		gap: 0.375rem;
-		background: #21262d;
+		/* background: #21262d; */
+		background: var(--edu-chip-bg);
 		border: 1px solid #30363d;
 		border-radius: 6px;
 		padding: 0.3rem 0.625rem;
 		font-size: 0.75rem;
-		color: #adbac7;
+		/* color: #adbac7; */
+		color: var(--edu-chip-text);
 		font-weight: 500;
 		width: fit-content;
+		border-color: var(--edu-border);
 	}
 
 	.ach-icon {
@@ -167,12 +207,15 @@ const tags: string[] = [];
 		display: inline-block;
 		font-size: 0.6875rem;
 		font-weight: 500;
-		color: #58a6ff;
-		background: rgba(31, 111, 235, 0.15);
+		/* color: #58a6ff; */
+		color: var(--edu-tag-color);
+		/* background: rgba(31, 111, 235, 0.15); */
+		background: var(--edu-tag-bg);
 		border: 1px solid rgba(56, 139, 253, 0.4);
 		border-radius: 20px;
 		padding: 0.1rem 0.5rem;
 		font-family: var(--font-mono);
 		white-space: nowrap;
+		border-color: var(--edu-tag-border);
 	}
 </style>
